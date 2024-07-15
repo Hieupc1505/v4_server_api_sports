@@ -1,0 +1,53 @@
+{
+    "name": "nodejs-api-boilerplate",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "NODE_ENV=development nodemon src/index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^1.7.2",
+        "compression": "^1.7.4",
+        "cors": "^2.8.5",
+        "debug": "^4.3.1",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "express-mongo-sanitize": "^2.2.0",
+        "express-status-monitor": "^1.3.4",
+        "helmet": "^7.1.0",
+        "http-status": "^1.7.4",
+        "joi": "^17.13.3",
+        "jsonwebtoken": "^9.0.2",
+        "lodash": "^4.17.21",
+        "mongoose": "^8.5.1",
+        "morgan": "^1.10.0",
+        "slugify": "^1.6.6",
+        "uuid": "^10.0.0",
+        "winston-daily-rotate-file": "^5.0.0"
+    },
+    "imports": {
+        "#configs/*": "./src/configs/*.js",
+        "#controllers/*": "./src/controllers/*.js",
+        "#models/*": "./src/models/*.js",
+        "#services/*": "./src/services/*.js",
+        "#helpers/*": "./src/helpers/*.js",
+        "#utils/*": "./src/utils/*.js",
+        "#routes/*": "./src/routes/*.js",
+        "#auths/*": "./src/auths/*.js",
+        "#cores/*": "./src/cores/*.js",
+        "#middlewares/*": "./src/middlewares/*.js",
+        "#libs/*": "./src/libs/*.js",
+        "#loaders/*": "./src/loaders/*.js",
+        "#validations/*": "./src/validations/*.js",
+        "#loggers/*": "./src/loggers/*.js",
+        "#root/*": "./*"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.4"
+    }
+}

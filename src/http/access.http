@@ -1,0 +1,12 @@
+@server = http://localhost:4654 
+
+@access = /api/v1/shop 
+
+###
+GET {{server}}{{access}}/login?name=hieu&age=10
+Content-Type: application/json 
+
+{
+    "email": "kljlkajfdkjasdlfkj", 
+    "password": "3543k65j4k6j"
+}
