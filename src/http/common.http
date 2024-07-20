@@ -1,0 +1,94 @@
+@server = http://localhost:4654 
+@access = /api/v1/shop 
+@teams = /api/v1/teams 
+@tournament = /api/v1/tournament
+@season = /api/v1/seasons
+@rounds = /api/v1/rounds
+@api = /api/v1
+@common = /api/v1/football
+
+###
+GET {{server}}{{common}}/17/season/52186/groups
+###
+GET {{server}}{{common}}/17/season/52186/specific
+###
+GET {{server}}{{common}}/133/season/57114/match
+
+
+###
+GET {{server}}{{common}}/133/season/57114/match
+
+
+###
+GET {{server}}{{tournament}}
+
+###
+GET {{server}}{{common}}/133/season/57114/playoff
+###
+POST {{server}}{{common}}/7/season/52162/round/playoff
+Content-Type: application/json
+
+{
+    "tour": 7,
+    "season": 52162,
+    "round_slug": "final",
+    "matches_parentId": null
+}
+
+###
+POST {{server}}{{common}}/133/season/52162/round/playoff
+Content-Type: application/json
+
+{
+    "tour": 7 ,
+    "season": 52162,
+    "round_slug": "semifinals",
+    "matches_parentId": ["669949195a00788889212cde"]
+}
+
+###
+POST {{server}}{{common}}/7/season/52162/round/playoff
+Content-Type: application/json
+
+{
+    "tour": 7,
+    "season": 52162,
+    "round_slug": "quarterfinals",
+    "matches_parentId": ["6699da2f6086bf07766a4c0e", "6699da2f6086bf07766a4c01"]
+}
+###
+POST {{server}}{{common}}/7/season/52162/round/playoff
+Content-Type: application/json
+
+{
+    "tour": 7,
+    "season": 52162,
+    "round_slug": 50,
+    "matches_parentId": null
+}
+###
+POST {{server}}{{common}}/7/season/52162/round/playoff
+Content-Type: application/json
+
+{
+    "tour": 7 ,
+    "season": 52162,
+    "round_slug": "round-of-16",
+    "matches_parentId": ["6699dca08469918f91269ae3", "6699dca08469918f91269ad6", "6699dca08469918f91269ac5", "6699dca08469918f91269ab8"]
+}
+
+###
+GET {{server}}{{common}}/7/season/52162/playoff
+Content-Type: application/json
+###
+GET {{server}}{{common}}/7/season/52162/playoff/v2
+Content-Type: application/json
+
+# unique-tournament/17/season/52186
+# unique-tournament/8/season/52376
+# unique-tournament/23/season/52760
+# unique-tournament/34/season/52571
+#35/52608
+//7/52162
+//1/56953
+//133/57114

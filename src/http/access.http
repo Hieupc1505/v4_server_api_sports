@@ -3,7 +3,7 @@
 @access = /api/v1/shop 
 
 ###
-GET {{server}}{{access}}/login?name=hieu&age=10
+POST {{server}}{{access}}/login?name=hieu&age=10
 Content-Type: application/json 
 
 {

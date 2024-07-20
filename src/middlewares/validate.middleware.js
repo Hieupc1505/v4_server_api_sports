@@ -16,13 +16,7 @@ module.exports = (schema) => (req, res, next) => {
             .map((details) => details.message)
             .join(",");
 
-        return next(
-            new BadRequestError(errorMessage, {
-                context: __filename,
-                req,
-                metadata: object,
-            })
-        );
+        return next(new BadRequestError(errorMessage));
     }
     Object.assign(req, value);
     return next();

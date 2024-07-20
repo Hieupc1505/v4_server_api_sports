@@ -11,24 +11,22 @@ const myLogger = require("#loggers/mylogger.log");
 //     }
 // }
 class ErrorResponse extends Error {
-    constructor(message, params) {
+    constructor(message, statusCode, stack = null) {
         super(message);
-        const {
-            statusCode = httpStatus.INTERNAL_SERVER_ERROR,
-            req = null,
-            stack = null,
-            context = __filename,
-            metadata = {},
-        } = params;
+
         this.statusCode = statusCode;
-        this.stack = stack;
-        if (env.isDevelopment) {
-            Error.captureStackTrace(this, this.constructor);
+        // this.stack = stack;
+
+        // if (env.isDevelopment) {
+        //     Error.captureStackTrace(this, this.constructor);
+        // } else {
+        //     this.stack = null;
+        // }
+        if (stack) {
+            this.stack = stack;
         } else {
-            this.stack = null;
+            Error.captureStackTrace(this, this.constructor);
         }
-        if (!env.isDevelopment && env.isProduction)
-            myLogger.error(this.message, [context, req, metadata]);
     }
 }
 
@@ -73,23 +71,14 @@ class ForbiddenError extends ErrorResponse {
         super(message, statusCode);
     }
 }
-
-// class InternalserverError extends ErrorResponse {
-//     contructor(
-//         message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR],
-//         statusCode = httpStatus.INTERNAL_SERVER_ERROR,
-//         stack = null
-//     ) {
-//         super(message, statusCode);
-//         this.stack = stack;
-
-//         if (env.isDevelopment && !stack) {
-//             Error.captureStackTrace(this, this.contructor);
-//         } else if (env.isProduction) {
-//             this.stack = null;
-//         }
-//     }
-// }
+class InternalserverError extends ErrorResponse {
+    constructor(
+        message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR],
+        statusCode = httpStatus.INTERNAL_SERVER_ERROR
+    ) {
+        super(message, statusCode);
+    }
+}
 
 module.exports = {
     ConflictRequestError,
@@ -98,4 +87,5 @@ module.exports = {
     NotFoundError,
     ForbiddenError,
     ErrorResponse,
+    InternalserverError,
 };

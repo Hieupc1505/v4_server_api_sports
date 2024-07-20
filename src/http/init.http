@@ -1,0 +1,97 @@
+@server = http://localhost:4654 
+
+@access = /api/v1/shop 
+
+@teams = /api/v1/teams 
+
+@tournament = /api/v1/tournament
+@season = /api/v1/seasons
+@rounds = /api/v1/rounds
+@api = /api/v1
+@group=/api/v1/group
+@playoff=/api/v1/playoff
+@highlight=/api/v1/highlight
+
+###
+GET {{server}}{{teams}}
+
+### 
+GET {{server}}{{tournament}}
+
+###
+GET {{server}}{{teams}}/find?id=2672
+
+###
+GET {{server}}{{season}}
+###
+POST {{server}}{{season}}
+Content-Type: application/json
+
+{
+    "id": 454546, 
+    "season": {
+        "channel": "", 
+        "playlist": "", 
+        "playlist2": "", 
+        
+    }
+}
+###
+POST {{server}}{{season}}/update
+Content-Type: application/json
+
+{
+    "id": 454546, 
+    "season": {
+        "channel": "", 
+        "playlist": "", 
+        "playlist2": ""
+        
+    }
+}
+
+###
+POST {{server}}{{rounds}}
+Content-Type: application/json 
+
+{
+    "total": 3, 
+    "current": 3, 
+    "tournament": 133, 
+    "season": 57114, 
+    "playoff": true
+}
+###
+GET {{server}}{{api}}/133/rounds/57114
+Content-Type: application/json 
+
+
+###
+POST {{server}}{{rounds}}/update
+Content-Type: application/json 
+
+{
+    "tournament": "666c12ca218dac7706cd745a", 
+    "team_per_board": 4, 
+    "total": 16, 
+    "team_in_playoff": 8,
+    "playoff": true, 
+    "broze": true,
+    "turn_in_board": 1, 
+    "current": 3
+}
+
+###
+GET {{server}}{{group}}/7/52162
+
+###
+GET {{server}}{{playoff}}
+
+
+###
+GET {{server}}{{group}}/7/season/52162/add
+
+
+
+###
+GET {{server}}{{highlight}}

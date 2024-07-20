@@ -28,6 +28,15 @@ const common = {
         output: getOsEnv("LOG_OUTPUT"),
         // dirname: getOsEnv("LOG_DIRNAME"),
     },
+    cloud: {
+        apiName: getOsEnv("CLOUDINARY_NAME"),
+        apiKey: getOsEnv("CLOUDINARY_API_KEY"),
+        apiSecret: getOsEnv("CLOUDINARY_API_SECRET"),
+        folder: getOsEnv("CLOUDINARY_FOLDER"),
+    },
+    ytb: {
+        key: getOsEnv("YOUTUBE_KEY"),
+    },
 };
 
 const dev = {

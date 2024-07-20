@@ -7,7 +7,7 @@ const { asyncHandler } = require("#helpers/asyncHandler.helper");
 const { loginSchema } = require("#validations/access.validation");
 const validate = require("#middlewares/validate.middleware");
 
-router.get(
+router.post(
     "/login",
     validate(loginSchema),
     asyncHandler(accessController.login)

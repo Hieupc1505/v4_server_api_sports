@@ -1,0 +1,53 @@
+@server = http://localhost:4654 
+@access = /api/v1/shop 
+@teams = /api/v1/teams 
+@tournament = /api/v1/tournament
+@season = /api/v1/seasons
+@rounds = /api/v1/rounds
+@api = /api/v1
+@common = /api/v1/football
+
+
+###
+GET {{server}}{{common}}/list
+###
+GET {{server}}{{tournament}}/17
+
+###
+GET {{server}}{{season}}/list?tournament=7
+###
+GET {{server}}{{season}}?tournament=17&season=52162
+
+
+###
+GET {{server}}{{common}}/1/season/56953/standings 
+
+
+###
+GET {{server}}{{common}}/23/season/52760/rounds
+
+###
+GET {{server}}{{common}}/1/season/56953/match/round/1
+
+###
+GET {{server}}{{common}}/7/season/52162/playoff/v2
+###
+POST {{server}}{{common}}/search 
+Content-Type: application/json
+
+{
+    "season" : "56953", 
+    "query" : "netherlands-poland", 
+    "t" : 1718542800, 
+    "matchid" :12198302, 
+    "slug" : "ba lan - ha lan"
+}
+
+# unique-tournament/17/season/52186
+# unique-tournament/8/season/52376
+# unique-tournament/23/season/52760
+# unique-tournament/34/season/52571
+#35/52608
+//7/52162
+//1/56953
+//133/57114
