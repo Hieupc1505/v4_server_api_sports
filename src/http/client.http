@@ -18,7 +18,7 @@ GET {{server}}{{season}}/list?tournament=7
 ###
 GET {{server}}{{season}}?tournament=17&season=52162
 
-
+// 7500ms 
 ###
 GET {{server}}{{common}}/1/season/56953/standings 
 

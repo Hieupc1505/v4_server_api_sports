@@ -53,7 +53,7 @@ const dev = {
 };
 
 const prod = {
-    common,
+    ...common,
     app: {
         port: process.env.PRO_APP_PORT,
         routePrefix: getOsEnv("APP_ROUTE_PREFIX"),
@@ -71,5 +71,5 @@ const config = {
 };
 
 const node = process.env.NODE_ENV || "development";
-
+console.log("node", process.env.NODE_ENV);
 module.exports = { env: config[node] };

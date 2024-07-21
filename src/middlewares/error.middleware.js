@@ -41,7 +41,7 @@ const errorHandler = (err, req, res, next) => {
         // console.dir(response, null, 2);
     }
 
-    if (!env.isDevelopment && env.isProduction)
+    if (env.isProduction)
         myLogger.error(err.message, [
             req.path,
             extractFilenameFromStack(err.stack),
