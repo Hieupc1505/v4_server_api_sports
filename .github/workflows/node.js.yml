@@ -5,7 +5,7 @@ name: Node.js CI server/sports
 
 on:
     push:
-        branches: ["main"]
+        branches: ['main']
 
 jobs:
     build:
@@ -23,9 +23,10 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
-                  cache: "npm"
+                  cache: 'npm'
             - run: npm ci
 
             - run: |
                   touch .env
                   echo "${{secrets.PROD_ENV_FILE}}" > .env
+            - run: pm2 restart sports-api
