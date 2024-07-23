@@ -11,6 +11,7 @@ const axios = require("axios");
 const {
     getFiveMatchRecent,
     convertFiveMatch,
+    getDetailFiveMatch,
     removeLastThreeDigits,
 } = require("#utils/index");
 
@@ -87,26 +88,29 @@ class GroupService {
         return 1;
     };
 
-    static getFiveMatchRecent = async (tournament, season, teamId) => {
+    static getFiveMatchRecent = async ({ tournament, season, teamId }) => {
         const [foundTour, foundSeason] = await getTourAndSeasonById(
             tournament,
             season
         );
 
         let time = removeLastThreeDigits(new Date().getTime());
+        const foundTeam = await _Team.findOne({ id: teamId });
+        if (!foundTeam) throw new BadRequestError("cannot found team");
 
         const findFiveMatchRecent = await _Match.getResultFiveMatchRecently(
             foundTour._id,
             foundSeason._id,
-            teamId,
-            time
+            foundTeam._id,
+            time,
+            ["home_team", "away_team"]
         );
 
         if (!findFiveMatchRecent) {
             throw new BadRequestError("Cannot find five match recently");
         }
 
-        return convertFiveMatch(findFiveMatchRecent, teamId);
+        return getDetailFiveMatch(findFiveMatchRecent, teamId);
     };
 
     static standings = async ({ tournament, season }) => {
@@ -134,20 +138,20 @@ class GroupService {
             group.rows = _.orderBy(group.rows, ["points"], ["desc"]);
         }
 
-        let fiveMatch = {};
-        for (let group of groups) {
-            const result = await getFiveMatchRecent(
-                foundTour._id,
-                foundSeason._id,
-                group
-            );
-            fiveMatch = {
-                ...fiveMatch,
-                ...result,
-            };
-        }
+        // let fiveMatch = {};
+        // for (let group of groups) {
+        //     const result = await getFiveMatchRecent(
+        //         foundTour._id,
+        //         foundSeason._id,
+        //         group
+        //     );
+        //     fiveMatch = {
+        //         ...fiveMatch,
+        //         ...result,
+        //     };
+        // }
 
-        return { groups, fiveMatch };
+        return groups;
     };
 }
 

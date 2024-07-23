@@ -45,6 +45,10 @@ route.get(
     "/:tournament/season/:season/match/update",
     asyncHandler(MatchController.updateMatchResult)
 );
+route.get(
+    "/:tournament/season/:season/match/recent/:teamId",
+    asyncHandler(GroupController.getFiveMatch)
+);
 
 route.post("/search", asyncHandler(HighlightController.getVideo));
 

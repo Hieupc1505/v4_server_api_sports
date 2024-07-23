@@ -24,6 +24,9 @@ GET {{server}}{{common}}/1/season/56953/standings
 
 
 ###
+GET {{server}}{{common}}/1/season/56953/match/recent/4709
+
+###
 GET {{server}}{{common}}/23/season/52760/rounds
 
 ###
