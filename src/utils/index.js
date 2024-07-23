@@ -98,6 +98,57 @@ const convertFiveMatch = (matches, teamId) => {
         } else return 3;
     });
 };
+const findResultFiveMatchRecently = (
+    winnerCode,
+    status = {},
+    home_team_id,
+    teamId
+) => {
+    // console.log(match.winnerCode, match.home_team_id.toString() === teamId.toString())
+    if (status?.code !== 0 || status?.code >= 100) {
+        if (winnerCode === 1 && home_team_id === teamId) {
+            return 1;
+        } else if (winnerCode === 1 && home_team_id !== teamId) {
+            return 0;
+        } else if (winnerCode === 2 && home_team_id === teamId) {
+            return 0;
+        } else if (winnerCode === 2 && home_team_id !== teamId) {
+            return 1;
+        } else {
+            return 2;
+        }
+    } else return 3;
+};
+
+const getDetailFiveMatch = (matches, teamId) => {
+    return matches.map((match) => {
+        const {
+            home_team,
+            away_team,
+            home_team_score,
+            away_team_score,
+            winnerCode,
+            status,
+        } = _.pick(match, [
+            "home_team",
+            "away_team",
+            "home_team_score",
+            "away_team_score",
+            "status",
+            "winnerCode",
+        ]);
+
+        return {
+            result: findResultFiveMatchRecently(
+                winnerCode,
+                status,
+                +home_team.id,
+                +teamId
+            ),
+            slug: `${home_team.shortName} ${home_team_score.display} - ${away_team_score.display} ${away_team.shortName}`,
+        };
+    });
+};
 
 const handleRoundCup = {
     ["round-of-16"]: {
@@ -225,4 +276,5 @@ module.exports = {
     getParentMatchId,
     convertTimeToInt,
     getVideoFromYTB,
+    getDetailFiveMatch,
 };

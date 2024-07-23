@@ -60,13 +60,38 @@ matchSchema.pre("validate", function (next) {
 });
 
 matchSchema.statics = {
-    getResultFiveMatchRecently(tournament, season, team_id, time) {
+    getResultFiveMatchRecently(
+        tournament,
+        season,
+        team_id,
+        time,
+        populate = []
+    ) {
         return this.find({
             tournament: tournament,
             season: season,
             startTime: { $lte: time },
             $or: [{ home_team: team_id }, { away_team: team_id }],
         })
+            .populate(populate)
+            .sort({ startTime: -1 })
+            .limit(5)
+            .lean();
+    },
+    getResultFiveMatchRecentlyWithTeamId(
+        tournament,
+        season,
+        team_id,
+        time,
+        populate = []
+    ) {
+        return this.find({
+            tournament: tournament,
+            season: season,
+            startTime: { $lte: time },
+            $or: [{ home_team: team_id }, { away_team: team_id }],
+        })
+            .populate(populate)
             .sort({ startTime: -1 })
             .limit(5)
             .lean();
