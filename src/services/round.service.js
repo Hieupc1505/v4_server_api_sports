@@ -34,19 +34,32 @@ class RoundService {
         );
     };
 
-    static addRound = async ({ season, tournament, total, current }) => {
-        const [foundSeason, foundTournament] = await Promise.all([
-            _Season.findOne({ id: season }).lean(),
-            _Tournament.findOne({ id: tournament }).lean(),
-        ]);
-        if (!foundSeason || !foundTournament)
-            throw new BadRequestError("Cannot find season or tournament");
+    static addRound = async ({
+        tournament,
+        season,
+        total,
+        current,
+        team_per_board,
+        turn_in_board = 2,
+        broze = false,
+        playoff = false,
+        team_in_playoff = 0,
+    }) => {
+        const foundSeason = await _Season.findOne({ id: season }).lean();
+        const foundTour = await _Tournament.findOne({ id: tournament });
+        if (!foundSeason || !foundTour)
+            throw new BadRequestError("Canot found tour and season");
 
         return await _Round.create({
             total,
             current,
-            tournament: foundTournament._id,
+            tournament: foundTour._id,
             season: foundSeason._id,
+            team_per_board,
+            turn_in_board,
+            broze,
+            playoff,
+            team_in_playoff,
         });
     };
 

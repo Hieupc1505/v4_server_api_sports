@@ -14,6 +14,7 @@ const {
     getDetailFiveMatch,
     removeLastThreeDigits,
 } = require("#utils/index");
+const TeamService = require("./team.service");
 
 class GroupService {
     static updateGroup = async ({ tournament, season }) => {
@@ -47,7 +48,9 @@ class GroupService {
             let specifics = [];
             const { rows } = group;
             for (let spec of rows) {
-                const team = await _Team.findOne({ id: spec.team.id });
+                let team = await _Team.findOne({ id: spec.team.id });
+
+                if (!team) team = await TeamService.addTeam(spec.team);
                 const {
                     position,
                     matches,
@@ -137,20 +140,6 @@ class GroupService {
         for (let group of groups) {
             group.rows = _.orderBy(group.rows, ["points"], ["desc"]);
         }
-
-        // let fiveMatch = {};
-        // for (let group of groups) {
-        //     const result = await getFiveMatchRecent(
-        //         foundTour._id,
-        //         foundSeason._id,
-        //         group
-        //     );
-        //     fiveMatch = {
-        //         ...fiveMatch,
-        //         ...result,
-        //     };
-        // }
-
         return groups;
     };
 }

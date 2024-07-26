@@ -1,4 +1,4 @@
-const cloudinary = require("../loaders/cloudinary");
+const cloudinary = require("#configs/cloudinary.config");
 const {
     InternalserverError,
     BadRequestError,

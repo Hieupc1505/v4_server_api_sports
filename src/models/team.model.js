@@ -37,7 +37,7 @@ teamSchema.methods = {
      *  Slug the title and add this to the slug prop
      */
     slugify() {
-        this.slug = slugify(this.team_name);
+        this.slug = slugify(this.name);
     },
 };
 

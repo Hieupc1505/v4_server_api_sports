@@ -120,6 +120,21 @@ const findResultFiveMatchRecently = (
     } else return 3;
 };
 
+const handleSlug = (home_team, away_team, home_team_score, away_team_score) => {
+    if (home_team_score?.penalties && home_team_score?.overtime) {
+        return `${home_team.shortName} ${home_team_score.overtime}(${home_team_score.penalties}) - (${away_team_score.penalties})${away_team_score.overtime} ${away_team.shortName}`;
+    }
+    if (home_team_score?.penalties && !home_team_score?.overtime) {
+        return `${home_team.shortName} ${home_team_score.normaltime}(${home_team_score.penalties}) - (${away_team_score.penalties})${away_team_score.normaltime} ${away_team.shortName}`;
+    }
+
+    if (!home_team_score?.penalties && home_team_score?.overtime) {
+        return `${home_team.shortName} ${home_team_score.overtime} - ${away_team_score.overtime} ${away_team.shortName}`;
+    }
+
+    return `${home_team.shortName} ${home_team_score.display} - ${away_team_score.display} ${away_team.shortName}`;
+};
+
 const getDetailFiveMatch = (matches, teamId) => {
     return matches.map((match) => {
         const {
@@ -145,7 +160,12 @@ const getDetailFiveMatch = (matches, teamId) => {
                 +home_team.id,
                 +teamId
             ),
-            slug: `${home_team.shortName} ${home_team_score.display} - ${away_team_score.display} ${away_team.shortName}`,
+            slug: handleSlug(
+                home_team,
+                away_team,
+                home_team_score,
+                away_team_score
+            ),
         };
     });
 };

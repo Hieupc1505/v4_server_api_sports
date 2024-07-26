@@ -34,4 +34,13 @@ tournamentSchema.methods = {
     },
 };
 
+tournamentSchema.statics = {
+    async findTour(
+        query,
+        select = { _id: 1, id: 1, name: 1, slug: 1, logo: 1, isGroup: 1 }
+    ) {
+        return this.findOne(query).select(select).lean();
+    },
+};
+
 module.exports = model(DOCUMENT_NAME, tournamentSchema);
