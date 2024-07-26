@@ -1,34 +1,32 @@
 const { BadRequestError } = require("#helpers/error.response");
 const _Tournament = require("#models/tournament.model");
+const _ = require("lodash");
 
 const { convertToThumbnailUrl } = require("#utils/index");
+const { uploadImageLink } = require("./upload.service");
 class TournamentService {
-    static initTournament = async () => {
-        // const leagues = await League2.find().lean();
-        // for (let league of leagues) {
-        //     const tour = new _Tournament({
-        //         tour_name: league.name,
-        //         tour_id: league.id,
-        //         tour_slug: league.slug,
-        //         tour_logo: league.logo,
-        //         tour_thumbnail: convertToThumbnailUrl(league.logo),
-        //         tour_img: league.image,
-        //         tour_img_thumbnail: convertToThumbnailUrl(league.image),
-        //     });
-        //     await tour.save();
-        // }
-        // return 1;
-        return await _Tournament.updateMany(
-            {},
-            {
-                $unset: {
-                    channelId: "",
-                    list: "",
-                    list2: "",
-                    image: "",
-                },
-            }
+    static initTournament = async ({ tourInfo, img, isGroup = false }) => {
+        const selectFieldTour = ["uniqueTournament", "category"];
+        const { uniqueTournament, category } = _.pick(
+            tourInfo,
+            selectFieldTour
         );
+        const foundTour = await _Tournament.findTour({
+            id: uniqueTournament.id,
+        });
+        if (foundTour) {
+            return foundTour;
+        }
+
+        const logo = await uploadImageLink(img);
+
+        return await _Tournament.create({
+            id: uniqueTournament.id,
+            name: uniqueTournament.name,
+            country: category.name,
+            isGroup,
+            logo,
+        });
     };
 
     static getInfoTournament = async ({ id }) => {

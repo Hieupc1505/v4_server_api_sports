@@ -5,6 +5,9 @@ const {
     convertToThumbnailUrl,
     convertToObjectIdMongodb,
 } = require("#utils/index");
+const { defaultHighlightMatchThumbnail } = require("#utils/generateLink.util");
+const { uploadImageLink } = require("./upload.service");
+
 class SeasonService {
     static init = async () => {
         const query = {},
@@ -12,6 +15,36 @@ class SeasonService {
             options = { upsert: true, new: true };
         return await _Season.updateMany(query, updateSet, options);
         // return 1;
+    };
+
+    static addSeason = async (
+        tournament,
+        season,
+        name,
+        year,
+        channel = null,
+        playlist = null,
+        img = null
+    ) => {
+        const foundTour = await _Tournament.findOne({ id: tournament }).lean();
+        if (!foundTour)
+            throw new BadRequestError("Can not found tour at creatSeason");
+
+        let image = defaultHighlightMatchThumbnail(foundTour.id);
+
+        if (img) {
+            image = await uploadImageLink(img);
+        }
+
+        return await _Season.create({
+            name,
+            year,
+            tournament: foundTour._id,
+            id: season,
+            channel,
+            playlist,
+            image,
+        });
     };
     /**
      *

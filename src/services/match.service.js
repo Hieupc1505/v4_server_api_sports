@@ -12,24 +12,6 @@ const { getTourAndSeasonById } = require("#utils/getTourAndSeason.util");
 
 class MatchService {
     static updateMatch = async ({ tournament, season }) => {
-        // const [foundTour, foundSeason] = await getTourAndSeasonById(
-        //     tournament,
-        //     season
-        // );
-
-        // const matches = await _Match.find({
-        //     tournament: convertToObjectIdMongodb(foundTour._id),
-        // });
-
-        // for (let match of matches) {
-        //     const data = await axios
-        //         .get(`https://www.sofascore.com/api/v1/event/${match.id}`)
-        //         .then((res) => res.data);
-        //     const { winnerCode } = _.pick(data.event, ["winnerCode"]);
-        //     match.winnerCode = winnerCode;
-
-        //     await match.save();
-        // }
         const matches = await _Match.find({ winnerCode: { $exists: false } });
         for (let match of matches) {
             const { event } = await axios
@@ -39,10 +21,6 @@ class MatchService {
             await match.save();
         }
         return 1;
-        // const data = await axios
-        //         .get(`https://www.sofascore.com/api/v1/event/${matche.id}`)
-        //         .then((res) => res.data);
-        //     const {} = _.pick(data.event, ['homeScore', 'awayScore', "customId", "status"])
     };
 
     static updateStartTimeMatch = async () => {
