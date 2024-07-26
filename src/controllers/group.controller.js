@@ -21,6 +21,13 @@ class GroupController {
             metadata: await GroupService.standings(req.params),
         }).send(res);
     };
+
+    static getFiveMatch = async (req, res, next) => {
+        new OK({
+            message: "Get five match recently",
+            metadata: await GroupService.getFiveMatchRecent(req.params),
+        }).send(res);
+    };
 }
 
 module.exports = GroupController;
