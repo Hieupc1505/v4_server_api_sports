@@ -6,16 +6,16 @@ const GroupController = require("#controllers/group.controller");
 const SpecificController = require("#controllers/specific.controller");
 const PlayoffController = require("#controllers/playoff.controller");
 const HighlightController = require("#controllers/highlight.controller");
+const InitController = require("#controllers/init.controller");
 
 const { asyncHandler } = require("#helpers/asyncHandler.helper");
 const MatchController = require("#controllers/match.controller");
 
+route.post(
+    "/create/tournament",
+    asyncHandler(InitController.createANewTournament)
+);
 route.get("/list", asyncHandler(TournamentController.getListTournament));
-
-// route.get(
-//     "/:tournament/season/:season/match",
-//     asyncHandler(MatchController.updateMatch)
-// );
 
 route.get(
     "/:tournament/season/:season/standings",

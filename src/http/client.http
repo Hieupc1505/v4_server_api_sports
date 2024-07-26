@@ -20,11 +20,11 @@ GET {{server}}{{season}}?tournament=17&season=52162
 
 // 7500ms 
 ###
-GET {{server}}{{common}}/1/season/56953/standings 
+GET {{server}}{{common}}/133/season/57114/standings 
 
 
 ###
-GET {{server}}{{common}}/1/season/56953/match/recent/4709
+GET {{server}}{{common}}/133/season/57114/match/recent/4819
 
 ###
 GET {{server}}{{common}}/23/season/52760/rounds
@@ -46,6 +46,9 @@ Content-Type: application/json
     "slug" : "ba lan - ha lan"
 }
 
+
+
+
 # unique-tournament/17/season/52186
 # unique-tournament/8/season/52376
 # unique-tournament/23/season/52760
@@ -54,3 +57,25 @@ Content-Type: application/json
 //7/52162
 //1/56953
 //133/57114
+
+
+# ###
+# POST {{server}}{{common}}/create/tournament 
+# Content-Type: application/json
+
+# {
+#     "tournament" : {
+#         "id": 17, 
+#         "season": 61627
+#     }, 
+#     "season": {
+#         "name": "Premier League 24/25", 
+#         "year": "24/25"
+#     }, 
+#     "rounds": {
+#         "total": 20, 
+#         "current": 1, 
+#         "team_per_board": 20, 
+#         "turn_in_board": 2
+#     }
+# }
